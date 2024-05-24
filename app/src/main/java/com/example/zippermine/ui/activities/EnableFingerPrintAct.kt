@@ -12,7 +12,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.zippermine.R
 import com.example.zippermine.core.HeartPrefConst
+import com.example.zippermine.data.interfaces.InterstitialCallBack
 import com.example.zippermine.databinding.ActivityEnableFingerPrintBinding
+import com.example.zippermine.ui.ads.Ads
 import com.example.zippermine.ui.dialog.SetSecuritySetting
 import com.google.android.material.snackbar.Snackbar
 import com.preference.PowerPreference
@@ -120,8 +122,26 @@ class EnableFingerPrintAct : AppCompatActivity() {
         snackbar.show()
     }
 
+    private fun backtoDashScreen(){
+        startActivity(
+            Intent(
+                this@EnableFingerPrintAct,
+                DashboardAct::class.java
+            )
+        )
+    }
+
     override fun onBackPressed() {
         super.onBackPressed()
-        finish()
+        Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
+            override fun onAdDisplayed() {
+                // No action needed
+            }
+
+            override fun onDismiss() {
+                backtoDashScreen()
+                finish()
+            }
+        })
     }
 }

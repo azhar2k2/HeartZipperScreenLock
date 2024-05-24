@@ -1,6 +1,7 @@
 package com.example.zippermine.ui.activities
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -13,9 +14,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.zippermine.R
 import com.example.zippermine.core.HeartAppDataGenerator
 import com.example.zippermine.core.HeartPrefConst
+import com.example.zippermine.data.interfaces.InterstitialCallBack
 import com.example.zippermine.data.interfaces.ThemeSelected
 import com.example.zippermine.databinding.ActivityThemesBinding
 import com.example.zippermine.ui.adapters.ThemeAdapter
+import com.example.zippermine.ui.ads.Ads
 import com.preference.PowerPreference
 
 class ThemesAct : AppCompatActivity() {
@@ -74,9 +77,27 @@ class ThemesAct : AppCompatActivity() {
         return list
     }
 
+    private fun backtoDashScreen(){
+        startActivity(
+            Intent(
+                this@ThemesAct,
+                DashboardAct::class.java
+            )
+        )
+    }
+
     override fun onBackPressed() {
         super.onBackPressed()
-        finish()
+        Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
+            override fun onAdDisplayed() {
+                // No action needed
+            }
+
+            override fun onDismiss() {
+                backtoDashScreen()
+                finish()
+            }
+        })
     }
 
     private fun themeOpen(theme: Int) {

@@ -1,6 +1,7 @@
 package com.example.zippermine.ui.activities
 
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
@@ -12,7 +13,9 @@ import androidx.core.content.ContextCompat
 import com.example.zippermine.R
 import com.example.zippermine.core.HeartAppConstants
 import com.example.zippermine.core.HeartPrefConst
+import com.example.zippermine.data.interfaces.InterstitialCallBack
 import com.example.zippermine.databinding.ActivitySecurityQuestionBinding
+import com.example.zippermine.ui.ads.Ads
 import com.preference.PowerPreference
 
 class SecurityQuestionSet : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -137,9 +140,26 @@ class SecurityQuestionSet : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
+    private fun backtoDashScreen(){
+        startActivity(
+            Intent(
+                this@SecurityQuestionSet,
+                DashboardAct::class.java
+            )
+        )
+    }
+
     override fun onBackPressed() {
         super.onBackPressed()
-        HeartAppConstants.securityQuestionCounter = 0
-        finish()
+        Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
+            override fun onAdDisplayed() {
+                // No action needed
+            }
+
+            override fun onDismiss() {
+                backtoDashScreen()
+                finish()
+            }
+        })
     }
 }

@@ -1,11 +1,14 @@
 package com.example.zippermine.ui.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.zippermine.core.HeartAppDataGenerator
+import com.example.zippermine.data.interfaces.InterstitialCallBack
 import com.example.zippermine.databinding.ActivityPreviewBinding
+import com.example.zippermine.ui.ads.Ads
 
 
 class PreviewAct : AppCompatActivity() {
@@ -104,13 +107,48 @@ class PreviewAct : AppCompatActivity() {
             }
             7 -> {
                 binding.zipperScreen.setBackgroundResource(HeartAppDataGenerator.theme1[7])
+                startActivity(
+                    Intent(
+                        this@PreviewAct,
+                        DashboardAct::class.java
+                    )
+                )
                 8
             }
             8 -> {
                 binding.zipperScreen.setBackgroundResource(HeartAppDataGenerator.theme1[8])
+                startActivity(
+                    Intent(
+                        this@PreviewAct,
+                        DashboardAct::class.java
+                    )
+                )
                 9
             }
             else -> return
         }
+    }
+
+    private fun backtoDashScreen(){
+        startActivity(
+            Intent(
+                this@PreviewAct,
+                DashboardAct::class.java
+            )
+        )
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
+            override fun onAdDisplayed() {
+                // No action needed
+            }
+
+            override fun onDismiss() {
+                backtoDashScreen()
+                finish()
+            }
+        })
     }
 }

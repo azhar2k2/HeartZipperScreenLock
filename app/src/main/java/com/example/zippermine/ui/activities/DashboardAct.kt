@@ -14,7 +14,9 @@ import com.example.zippermine.core.HeartAppConstants
 import com.example.zippermine.core.HeartPrefConst
 import com.example.zippermine.core.SHOW_AD_ON_NEXT_SCREEN
 import com.example.zippermine.data.interfaces.FingerprintAdsDismiss
+import com.example.zippermine.data.interfaces.InterstitialCallBack
 import com.example.zippermine.databinding.ActivityDashboardBinding
+import com.example.zippermine.ui.ads.Ads
 import com.example.zippermine.ui.dialog.ExitBottomSheet
 import com.google.android.material.snackbar.Snackbar
 import com.preference.PowerPreference
@@ -73,12 +75,15 @@ class DashboardAct : AppCompatActivity(), FingerprintAdsDismiss {
         }
 
         binding.passwordResetCard.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    SecurityQuestionSet::class.java
-                ).putExtra(SHOW_AD_ON_NEXT_SCREEN, true)
-            )
+            Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
+                override fun onAdDisplayed() {
+                    // No action needed
+                }
+
+                override fun onDismiss() {
+                    securityQuestionScreen()
+                }
+            })
         }
 
         binding.navRateUs.setOnClickListener {
@@ -90,29 +95,41 @@ class DashboardAct : AppCompatActivity(), FingerprintAdsDismiss {
         }
 
         binding.fingerprintCard.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@DashboardAct,
-                    EnableFingerPrintAct::class.java
-                )
-            )
+            Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
+                override fun onAdDisplayed() {
+                    // No action needed
+                }
+
+                override fun onDismiss() {
+                    enableFingerPrintScreen()
+                }
+            })
         }
 
         binding.previewIcon.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@DashboardAct, PreviewAct::class.java
-                )
-            )
+            Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
+                override fun onAdDisplayed() {
+                    // No action needed
+                }
+
+                override fun onDismiss() {
+                    previewScreen()
+                }
+            })
         }
 
         binding.enableZipLock.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    EnableLockAct::class.java
-                ).putExtra(SHOW_AD_ON_NEXT_SCREEN, true)
-            )
+
+            Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
+                override fun onAdDisplayed() {
+                    // No action needed
+                }
+
+                override fun onDismiss() {
+                    enableLockScreen()
+                }
+            })
+
         }
 
         binding.setPassword.setOnClickListener {
@@ -138,12 +155,15 @@ class DashboardAct : AppCompatActivity(), FingerprintAdsDismiss {
         }
 
         binding.themesCard.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@DashboardAct,
-                    ThemesAct::class.java
-                )
-            )
+            Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
+                override fun onAdDisplayed() {
+                    // No action needed
+                }
+
+                override fun onDismiss() {
+                    themesScreen()
+                }
+            })
         }
 
         binding.vibrationCard.setOnClickListener {
@@ -155,6 +175,55 @@ class DashboardAct : AppCompatActivity(), FingerprintAdsDismiss {
                 PowerPreference.getDefaultFile().setBoolean(HeartPrefConst.IsVibrationSet, true)
             }
         }
+    }
+    private fun enableLockScreen() {
+        startActivity(
+            Intent(
+                this,
+                EnableLockAct::class.java
+            ).putExtra(SHOW_AD_ON_NEXT_SCREEN, true)
+        )
+        finish()
+    }
+
+    private fun enableFingerPrintScreen(){
+        startActivity(
+            Intent(
+                this,
+                EnableFingerPrintAct::class.java
+            ).putExtra(SHOW_AD_ON_NEXT_SCREEN, true)
+        )
+        finish()
+    }
+
+    private fun previewScreen(){
+        startActivity(
+            Intent(
+                this,
+                PreviewAct::class.java
+            ).putExtra(SHOW_AD_ON_NEXT_SCREEN, true)
+        )
+        finish()
+    }
+
+    private fun securityQuestionScreen(){
+        startActivity(
+            Intent(
+                this,
+                SecurityQuestionSet::class.java
+            ).putExtra(SHOW_AD_ON_NEXT_SCREEN, true)
+        )
+        finish()
+    }
+
+    private fun themesScreen(){
+        startActivity(
+            Intent(
+                this,
+                ThemesAct::class.java
+            ).putExtra(SHOW_AD_ON_NEXT_SCREEN, true)
+        )
+        finish()
     }
 
     private fun initToolbar() {

@@ -11,11 +11,16 @@ import androidx.appcompat.app.AppCompatActivity
 import com.airbnb.lottie.LottieAnimationView
 import com.example.zippermine.R
 import com.example.zippermine.core.HeartAppConstants
+import com.example.zippermine.data.interfaces.InterstitialCallBack
+import com.example.zippermine.ui.ads.Ads
+import com.example.zippermine.ui.ads.admob.AdmobInterstitialAd
+import com.google.android.gms.ads.MobileAds
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import com.google.firebase.remoteconfig.remoteConfigSettings
 
 class SplashAct : AppCompatActivity() {
 
@@ -26,11 +31,24 @@ class SplashAct : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        MobileAds.initialize(this)
+
+        // Load Interstitial Ad
+        AdmobInterstitialAd.loadInterAdmob(this)
+
         val prog = findViewById<LottieAnimationView>(R.id.prog)
         val next = findViewById<Button>(R.id.next)
 
         next.setOnClickListener {
-            nextScreen()
+            Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
+                override fun onAdDisplayed() {
+                    // No action needed
+                }
+
+                override fun onDismiss() {
+                    nextScreen()
+                }
+            })
         }
 
         if (HeartAppConstants.checkInternetConnection(this)) {
