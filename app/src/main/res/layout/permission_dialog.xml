@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/round_corners_8sdp"
+        android:backgroundTint="@color/white">
+
+
+        <TextView
+            android:id="@+id/headingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Permission Required"
+            android:paddingBottom="@dimen/_20sdp"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center"
+            />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/readPhoneStateCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/headingText"
+            android:layout_margin="@dimen/_10sdp">
+
+
+            <ImageView
+                android:id="@+id/permissionIcon1"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src="@drawable/ic_permission_icon_svg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/permissionText1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@id/permissionIcon1"
+                app:layout_constraintTop_toTopOf="@id/permissionIcon1"
+                app:layout_constraintBottom_toBottomOf="@id/permissionIcon1"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textSize="@dimen/_10ssp"
+                android:textColor="@color/black"
+                android:text="Read Phone State Permission to use fully functional screen lock."/>
+
+
+            <Button
+                android:id="@+id/readPhoneStateBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/permissionIcon1"
+                android:backgroundTint="#FF0000"
+                android:text="Permit"
+                android:textColor="@color/white"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/grey700"
+            app:layout_constraintTop_toBottomOf="@id/readPhoneStateCard"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:alpha="0.5"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/screenOverlayCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_margin="@dimen/_10sdp">
+
+
+            <ImageView
+                android:id="@+id/permissionIcon2"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src="@drawable/ic_permission_icon_svg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/permissionText2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@id/permissionIcon2"
+                app:layout_constraintTop_toTopOf="@id/permissionIcon2"
+                app:layout_constraintBottom_toBottomOf="@id/permissionIcon2"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textSize="@dimen/_10ssp"
+                android:textColor="@color/black"
+                android:text="Kindly permit draw over other apps to use fully functional screen lock."/>
+
+
+            <Button
+                android:id="@+id/screenOverlayBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/permissionIcon2"
+                android:backgroundTint="#FF0000"
+                android:text="Permit"
+                android:textColor="@color/white"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,13 @@
+<resources>
+
+    <string name="app_name">ZipperMine</string>
+
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+
+    <string name="enable_lock_error">Please enable Pattern/Pin/Dot lock</string>
+    <string name="fingerprint_lock_on">Fingerprint lock turned on</string>
+    <string name="fingerprint_lock_off">Fingerprint lock turned off</string>
+    <string name="setSecurityQuestion">Security will help you if you ever forget your password. If you want to set security question then click Yes otherwise click No.</string>
+
+</resources>

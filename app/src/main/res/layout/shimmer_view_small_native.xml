@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:weightSum="2">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.2"
+        android:gravity="center"
+        android:background="@color/light_gray"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.8"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/_3sdp">
+
+
+                <View
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:background="@color/light_gray"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/firstT"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:singleLine="true"
+                        android:text="Facebook advertiser"
+                        android:textColor="@color/light_gray"
+                        android:textSize="10sp"
+                        android:background="@color/light_gray"/>
+
+                    <TextView
+                        android:id="@+id/secondT"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:singleLine="true"
+                        android:text="This is a facebook demo ad"
+                        android:textColor="@color/light_gray"
+                        android:background="@color/light_gray"
+                        android:textSize="8sp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/thirdT"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:lines="1"
+                        android:singleLine="true"
+                        android:text="Tour ad integration works."
+                        android:textColor="@color/light_gray"
+                        android:background="@color/light_gray"
+                        android:textSize="8sp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/_4sdp"
+            android:paddingBottom="@dimen/_4sdp">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_6sdp"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingRight="@dimen/_6sdp"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:text="Ad"
+                    android:textColor="@color/light_gray"
+                    android:textSize="@dimen/_10ssp"
+                    android:background="@color/light_gray"/>
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:textColor="@android:color/white"
+                android:visibility="visible"
+                android:background="@color/light_gray"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

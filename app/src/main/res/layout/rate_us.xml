@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/_12sdp"
+    android:background="@drawable/round_corners_24sdp"
+    android:backgroundTint="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/_20sdp">
+
+    <ImageView
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/ic_sidebar_rate"
+        app:tint="@color/popups_colors" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:gravity="center"
+        android:padding="@dimen/_8sdp"
+        android:text="Please rate 5 stars to support"
+        android:textColor="@color/black"
+        android:textSize="7pt"
+        android:textStyle="bold" />
+
+    <RatingBar
+        android:id="@+id/rate_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:numStars="5"
+        android:stepSize="1"
+        android:theme="@style/RatingBar" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/review_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:text="Cancel"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/review_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:text="Submit"
+            android:textColor="@color/popups_colors" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.SecurityQuestionSet"
+    android:background="@color/dashboard_background"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="@dimen/_10sdp"
+        android:background="@color/popups_colors"
+        >
+
+        <TextView
+            android:id="@+id/titleBarTV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Security Question"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="18sp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/topText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adsLayout"
+        android:text="Select security question."
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginLeft="@dimen/_25sdp"
+        android:textSize="18sp"/>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/spinnerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topText"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_20sdp"
+        android:background="@drawable/round_corners_8sdp"
+        android:backgroundTint="#EEEEEE"
+        android:elevation="@dimen/_10sdp"
+        >
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:dropDownSelector="@color/white"
+            android:spinnerMode="dialog"
+
+            />
+
+        <TextView
+            android:id="@+id/questionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|start"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            android:paddingLeft="@dimen/_10sdp"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <TextView
+        android:id="@+id/answerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinnerLayout"
+        android:text="Answer"
+        android:layout_marginLeft="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:textSize="18sp"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/answerEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/answerTextView"
+        android:background="@drawable/round_corners_8sdp"
+        android:backgroundTint="#EEEEEE"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_20sdp"
+        android:padding="@dimen/_10sdp"
+        android:textColor="@color/black"
+        android:hint="Enter your answer here..."
+        android:textColorHint="@color/text_fingerprint"
+        android:elevation="@dimen/_5sdp"
+        android:maxLength="100"/>
+
+    <EditText
+        android:id="@+id/answerEditTextAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/answerTextView"
+        android:background="@drawable/round_corners_8sdp"
+        android:backgroundTint="#EEEEEE"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_20sdp"
+        android:padding="@dimen/_10sdp"
+        android:textColor="@color/black"
+        android:hint="Enter Answer Of your Old Question..."
+        android:textColorHint="@color/text_fingerprint"
+        android:elevation="@dimen/_5sdp"
+        android:maxLength="100"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/editTextValidationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/answerEditText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="Please enter something."
+        android:textColor="@color/light_red"
+        android:visibility="gone"/>
+
+
+    <Button
+        android:id="@+id/doneButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/answerEditText"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:text="Done"
+        android:backgroundTint="@color/popups_colors"
+        android:textAllCaps="false"
+        android:background="@drawable/round_corners_24sdp"
+        android:textColor="@color/grey900"/>
+
+    <Button
+        android:id="@+id/doneButtonAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/answerEditTextAnswer"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:text="Done"
+        android:backgroundTint="@color/popups_colors"
+        android:textAllCaps="false"
+        android:background="@drawable/round_corners_24sdp"
+        android:textColor="@color/grey900"
+        android:visibility="gone"/>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/adsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/action_bar"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_16sdp">
+
+        <FrameLayout
+            android:id="@+id/am_native_sc"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_220sdp"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerViewSQS"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_220sdp"
+            app:shimmer_auto_start="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone">
+
+            <include
+                layout="@layout/shimmer_layout_view"
+                android:id="@+id/shimmer_main" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
