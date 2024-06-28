@@ -25,7 +25,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="Permission Required"
+            android:text="@string/permission_required"
             android:paddingBottom="@dimen/_20sdp"
             android:textSize="@dimen/_16ssp"
             android:textStyle="bold"
@@ -63,7 +63,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:textSize="@dimen/_10ssp"
                 android:textColor="@color/black"
-                android:text="Read Phone State Permission to use fully functional screen lock."/>
+                android:text="@string/read_phone_state_permission_to_use_fully_functional_screen_lock"/>
 
 
             <Button
@@ -73,7 +73,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/permissionIcon1"
                 android:backgroundTint="#FF0000"
-                android:text="Permit"
+                android:text="@string/permit"
                 android:textColor="@color/white"
                 />
 
@@ -122,7 +122,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:textSize="@dimen/_10ssp"
                 android:textColor="@color/black"
-                android:text="Kindly permit draw over other apps to use fully functional screen lock."/>
+                android:text="@string/kindly_permit_draw_over_other_apps_to_use_fully_functional_screen_lock"/>
 
 
             <Button
@@ -132,7 +132,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/permissionIcon2"
                 android:backgroundTint="#FF0000"
-                android:text="Permit"
+                android:text="@string/permit_2"
                 android:textColor="@color/white"
                 />
 

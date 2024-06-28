@@ -16,7 +16,7 @@
         android:layout_marginHorizontal="@dimen/_20sdp"
         android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
-        android:text="Do you want to set security question?"/>
+        android:text="@string/do_you_want_to_set_security_question"/>
 
     <TextView
         android:id="@+id/body"
@@ -43,7 +43,7 @@
         android:layout_marginRight="@dimen/_10sdp"
         android:background="@drawable/round_corners_8sdp"
         android:backgroundTint="@color/gray"
-        android:text="No"
+        android:text="@string/no"
         android:textColor="@color/white"
         />
 
@@ -60,7 +60,7 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:background="@drawable/round_corners_8sdp"
         android:backgroundTint="@color/green"
-        android:text="Yes"
+        android:text="@string/yes"
         android:textColor="@color/white"/>
 
 

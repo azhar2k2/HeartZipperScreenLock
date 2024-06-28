@@ -16,6 +16,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -50,7 +52,6 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.user.messaging.platform)
     implementation(libs.play.services.ads.lite)
-    implementation(libs.androidx.lifecycle.process)
     implementation(libs.firebase.config.ktx)
 //    implementation(libs.compose.preview.renderer)
 //    implementation(libs.androidx.room.compiler)
@@ -96,4 +97,13 @@ dependencies {
 
     implementation ("com.amirarcane.lock-screen:lockscreen:2.0.0")
     api ("com.multidots:fingerprint-auth:1.0.1")
+
+    val lifecycle_version = ("2.0.0")
+    implementation ("androidx.lifecycle:lifecycle-extensions:$lifecycle_version")
+    implementation ("androidx.lifecycle:lifecycle-runtime:$lifecycle_version")
+    annotationProcessor ("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
+
+    val multidex_version = "2.0.1"
+    implementation("androidx.multidex:multidex:$multidex_version")
+
 }

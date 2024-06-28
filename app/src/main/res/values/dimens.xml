@@ -9,4 +9,11 @@
     <dimen name="spacing_mlarge">20dp</dimen>
     <dimen name="spacing_xmlarge">40dp</dimen>
 
+    //Ads
+    <dimen name="fab_padding">16dp</dimen>
+    <dimen name="extra_padding">32dp</dimen>
+    <dimen name="padding">8dp</dimen>
+    <dimen name="icon_size">32dp</dimen>
+    <dimen name="less_padding">4dp</dimen>
+
 </resources>

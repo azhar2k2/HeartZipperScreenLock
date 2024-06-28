@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Enable Zip Lock"
+            android:text="@string/enable_zip_lock_acttxt"
             android:textColor="@color/black"
             android:textSize="@dimen/_16ssp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -44,6 +44,12 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <FrameLayout
+        android:id="@+id/am_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        android:visibility="gone"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/enableZipCard"
@@ -54,7 +60,7 @@
         android:layout_marginRight="@dimen/_11sdp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topBar">
+        app:layout_constraintTop_toBottomOf="@id/am_banner">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/lockBg"
@@ -88,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_15sdp"
             android:clickable="false"
-            android:text="Enable Zip Lock"
+            android:text="@string/enable_zip_lock_txt"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
@@ -115,34 +121,16 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
+        android:id="@+id/nativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/_300sdp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/enableZipCard"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_margin="@dimen/_8sdp">
 
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/dark_gray"
-            app:shimmer_auto_start="true"
-            android:visibility="gone">
-
-            <include layout="@layout/shimmer_layout_view" />
-
-        </com.facebook.shimmer.ShimmerFrameLayout>
-
-        <FrameLayout
-            android:id="@+id/am_native"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

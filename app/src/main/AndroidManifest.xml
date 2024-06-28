@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.zippermine">
@@ -15,6 +14,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
+        android:name=".ui.ads.Application"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -22,11 +22,12 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity
+            android:name=".ui.activities.LanguageAct"
+            android:exported="false" />
         <activity
             android:name=".ui.activities.EnableFingerPrintAct"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity
             android:name=".ui.activities.SecurityQuestionSet"
             android:exported="false" />
@@ -65,7 +66,6 @@
             android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

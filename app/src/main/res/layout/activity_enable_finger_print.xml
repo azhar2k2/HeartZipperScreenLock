@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Fingerprint"
+            android:text="@string/fingerprint_acttxt"
             android:textColor="@color/topBarTextColor"
             android:textSize="@dimen/_16ssp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -45,6 +45,12 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <FrameLayout
+        android:id="@+id/bannerAd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        android:visibility="gone"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fingerprintCard"
@@ -55,7 +61,7 @@
         android:layout_marginRight="@dimen/_11sdp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topBar">
+        app:layout_constraintTop_toBottomOf="@id/bannerAd">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/lockBg"
@@ -104,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_15sdp"
             android:clickable="false"
-            android:text="Enable Fingerprint"
+            android:text="@string/enable_fingerprint"
             android:textColor="@color/mainTextColor"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
@@ -131,33 +137,16 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
+        android:id="@+id/nativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/_300sdp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fingerprintCard"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="@dimen/_8sdp">
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer_fing"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/dark_gray"
-            app:shimmer_auto_start="true"
-            android:visibility="gone">
 
-            <include layout="@layout/shimmer_layout_view" />
 
-        </com.facebook.shimmer.ShimmerFrameLayout>
-
-        <FrameLayout
-            android:id="@+id/am_native_fing"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

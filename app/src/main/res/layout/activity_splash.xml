@@ -13,42 +13,16 @@
         android:background="@color/black"
         android:alpha="0.4"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/adsLayout"
+    <FrameLayout
+        android:id="@+id/nativeAdFrameLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top"
-        app:layout_constraintBottom_toTopOf="@id/bottom"
-        android:layout_marginHorizontal="@dimen/_8sdp">
-
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/splash_shimmer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:shimmer_auto_start="true"
-            android:visibility="gone">
-
-            <include layout="@layout/shimmer_layout_view" />
-
-        </com.facebook.shimmer.ShimmerFrameLayout>
-
-        <FrameLayout
-            android:id="@+id/am_native_splash"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="gone"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="@dimen/_250sdp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="@dimen/fab_padding"
+        android:layout_marginTop="@dimen/fab_padding"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/top"
@@ -56,9 +30,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom"
         android:gravity="center"
         android:orientation="vertical"
+        android:layout_marginBottom="@dimen/_100sdp"
         android:paddingBottom="@dimen/_15sdp">
 
         <ImageView
@@ -85,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Protect your privacy"
+            android:text="@string/protect_your_privacy"
             android:textColor="@color/mainTextColor"
             android:textSize="@dimen/_10ssp" />
 
@@ -115,23 +90,6 @@
             app:lottie_fileName="splashloading.json"
             android:visibility="visible"/>
 
-
-        <Button
-            android:id="@+id/next"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginHorizontal="@dimen/_12sdp"
-            android:background="@drawable/round_corners_8sdp"
-            android:backgroundTint="@color/popups_colors"
-            android:letterSpacing="0.1"
-            android:textSize="@dimen/_13ssp"
-            android:text="Continue"
-            android:textColor="@color/white"
-            android:elevation="@dimen/_5sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:visibility="gone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -23,20 +23,27 @@
             android:id="@+id/titleBarTV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Security Question"
+            android:text="@string/security_question"
             android:textColor="@color/black"
             android:gravity="center"
             android:textSize="18sp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <FrameLayout
+        android:id="@+id/bannerAd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/action_bar"
+        android:visibility="gone"/>
+
     <TextView
         android:id="@+id/topText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/adsLayout"
-        android:text="Select security question."
+        app:layout_constraintTop_toBottomOf="@id/bannerAd"
+        android:text="@string/select_security_question"
         android:textColor="@color/black"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginLeft="@dimen/_25sdp"
@@ -92,7 +99,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spinnerLayout"
-        android:text="Answer"
+        android:text="@string/answer"
         android:layout_marginLeft="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:textSize="18sp"
@@ -111,7 +118,7 @@
         android:layout_marginRight="@dimen/_20sdp"
         android:padding="@dimen/_10sdp"
         android:textColor="@color/black"
-        android:hint="Enter your answer here..."
+        android:hint="@string/enter_your_answer_here"
         android:textColorHint="@color/text_fingerprint"
         android:elevation="@dimen/_5sdp"
         android:maxLength="100"/>
@@ -129,7 +136,7 @@
         android:layout_marginRight="@dimen/_20sdp"
         android:padding="@dimen/_10sdp"
         android:textColor="@color/black"
-        android:hint="Enter Answer Of your Old Question..."
+        android:hint="@string/enter_answer_of_your_old_question"
         android:textColorHint="@color/text_fingerprint"
         android:elevation="@dimen/_5sdp"
         android:maxLength="100"
@@ -143,7 +150,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="@dimen/_5sdp"
-        android:text="Please enter something."
+        android:text="@string/please_enter_something"
         android:textColor="@color/light_red"
         android:visibility="gone"/>
 
@@ -156,7 +163,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/answerEditText"
         android:layout_marginTop="@dimen/_30sdp"
-        android:text="Done"
+        android:text="@string/done"
         android:backgroundTint="@color/popups_colors"
         android:textAllCaps="false"
         android:background="@drawable/round_corners_24sdp"
@@ -170,7 +177,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/answerEditTextAnswer"
         android:layout_marginTop="@dimen/_30sdp"
-        android:text="Done"
+        android:text="@string/done_2"
         android:backgroundTint="@color/popups_colors"
         android:textAllCaps="false"
         android:background="@drawable/round_corners_24sdp"
@@ -179,45 +186,16 @@
 
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/adsLayout"
+    <FrameLayout
+        android:id="@+id/nativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="@dimen/_250sdp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/action_bar"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:layout_marginEnd="@dimen/_16sdp">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <FrameLayout
-            android:id="@+id/am_native_sc"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_220sdp"
-            android:visibility="gone"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmerViewSQS"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_220sdp"
-            app:shimmer_auto_start="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="gone">
-
-            <include
-                layout="@layout/shimmer_layout_view"
-                android:id="@+id/shimmer_main" />
-
-        </com.facebook.shimmer.ShimmerFrameLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
 
 

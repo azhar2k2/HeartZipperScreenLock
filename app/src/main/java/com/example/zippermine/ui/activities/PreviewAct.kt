@@ -3,17 +3,23 @@ package com.example.zippermine.ui.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.zippermine.core.HeartAppDataGenerator
 import com.example.zippermine.data.interfaces.InterstitialCallBack
 import com.example.zippermine.databinding.ActivityPreviewBinding
 import com.example.zippermine.ui.ads.Ads
+import com.example.zippermine.ui.ads.admob.loadNdShowINterAd
+import com.example.zippermine.ui.dialog.ALodingDialog
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 
 
 class PreviewAct : AppCompatActivity() {
 
     private lateinit var binding: ActivityPreviewBinding
+    private lateinit var aLoadingDialog: ALodingDialog
     private var frameNumber = 0
     private var isDownFromStart = false
     private var mScreenHeight = 0
@@ -27,11 +33,38 @@ class PreviewAct : AppCompatActivity() {
         binding = ActivityPreviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        InterstitialAd.showInterstitialAdmob(
-//            this,
-//            this,
-//            AdsConstant.preview_lock_interstitial
-//        )
+        //InterstitialAd
+        val interstFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+        // Set default values (fallback when values are not available)
+        val defaults: Map<String, Any> = mapOf(
+            "welcome_message" to "Welcome to our app!",
+            "securityQuestionNative" to "" // Default value for splashNative
+        )
+
+        interstFirebaseRemoteConfig.setDefaultsAsync(defaults)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Fetch remote configs
+                    interstFirebaseRemoteConfig.fetchAndActivate()
+                        .addOnCompleteListener { fetchTask ->
+                            if (fetchTask.isSuccessful) {
+                                // Remote configs fetched and activated
+                                Ads.interstitialON = interstFirebaseRemoteConfig.getString("interstitialON")
+
+                                // Load and show the native or MREC ad
+                                Ads.loadAndShowInterstitial(
+                                    this,
+                                    remoteKey = Ads.interstitialON,
+//                                    frameLayout = findViewById<FrameLayout>(R.id.am_native_dash)
+                                )
+                            } else {
+                                // Fetch failed
+                            }
+                        }
+                } else {
+                    // Set defaults failed
+                }
+            }
 
         binding.zipperScreen.setBackgroundResource(HeartAppDataGenerator.theme1[0])
         setListeners()
@@ -140,15 +173,7 @@ class PreviewAct : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
-            override fun onAdDisplayed() {
-                // No action needed
-            }
-
-            override fun onDismiss() {
-                backtoDashScreen()
-                finish()
-            }
-        })
+        backtoDashScreen()
+        finish()
     }
 }

@@ -5,6 +5,9 @@ import android.content.Intent
 import android.hardware.fingerprint.FingerprintManager
 import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.view.View
 import android.widget.FrameLayout
@@ -14,19 +17,98 @@ import com.example.zippermine.R
 import com.example.zippermine.core.HeartPrefConst
 import com.example.zippermine.data.interfaces.InterstitialCallBack
 import com.example.zippermine.databinding.ActivityEnableFingerPrintBinding
+import com.example.zippermine.ui.ads.AdmobBannerAds
 import com.example.zippermine.ui.ads.Ads
-import com.example.zippermine.ui.dialog.SetSecuritySetting
+//import com.example.zippermine.ui.ads.admob.AdmobNativeAds
+import com.example.zippermine.ui.ads.admob.AdsConstant
+import com.example.zippermine.ui.ads.admob.loadNdShowINterAd
+import com.example.zippermine.ui.dialog.ALodingDialog
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.FirebaseApp
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.preference.PowerPreference
 
 class EnableFingerPrintAct : AppCompatActivity() {
 
     private lateinit var binding: ActivityEnableFingerPrintBinding
 
+    private lateinit var aLoadingDialog: ALodingDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEnableFingerPrintBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        FirebaseApp.initializeApp(this)
+        val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+
+        // Set default values (fallback when values are not available)
+        val defaults: Map<String, Any> = mapOf(
+            "welcome_message" to "Welcome to our app!",
+            "fingerPrintNative" to "" // Default value for splashNative
+        )
+
+        firebaseRemoteConfig.setDefaultsAsync(defaults)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Fetch remote configs
+                    firebaseRemoteConfig.fetchAndActivate()
+                        .addOnCompleteListener { fetchTask ->
+                            if (fetchTask.isSuccessful) {
+                                // Remote configs fetched and activated
+                                Ads.fingerPrintNative = firebaseRemoteConfig.getString("fingerPrintNative")
+
+                                // Load and show the native or MREC ad
+                                Ads.loadAndShowNativeOrMRECAd(
+                                    this,
+                                    remoteKey = Ads.fingerPrintNative,
+                                    frameLayout = findViewById<FrameLayout>(R.id.nativeLayout)
+                                )
+                            } else {
+                                // Fetch failed
+                            }
+                        }
+                } else {
+                    // Set defaults failed
+                }
+            }
+
+//      InterstitialAd
+        val interstFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+
+        interstFirebaseRemoteConfig.setDefaultsAsync(defaults)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Fetch remote configs
+                    interstFirebaseRemoteConfig.fetchAndActivate()
+                        .addOnCompleteListener { fetchTask ->
+                            if (fetchTask.isSuccessful) {
+                                // Remote configs fetched and activated
+                                Ads.interstitialON = interstFirebaseRemoteConfig.getString("interstitialON")
+
+                                // Load and show the native or MREC ad
+                                Ads.loadAndShowInterstitial(
+                                    this,
+                                    remoteKey = Ads.interstitialON,
+//                                    frameLayout = findViewById<FrameLayout>(R.id.am_native_dash)
+                                )
+                            } else {
+                                // Fetch failed
+                            }
+                        }
+                } else {
+                    // Set defaults failed
+                }
+            }
+
+
+
+
+//        if (AdsConstant.banner_dashboard == "am") {
+//            AdmobBannerAds.loadAndShowBanner(this, binding.bannerAd)
+//        } else if (AdsConstant.banner_dashboard == "ab") {
+//            AdmobBannerAds.loadAdmobAdaptiveBanner(this, binding.bannerAd)
+//        }
 
         if (PowerPreference.getDefaultFile().getBoolean(HeartPrefConst.IsZipLockEnable, false)) {
             binding.fingerprintCardSwitch.isChecked =
@@ -131,17 +213,26 @@ class EnableFingerPrintAct : AppCompatActivity() {
         )
     }
 
+//    private fun loadNativeAds() {
+//        if (AdsConstant.fingerprint_screen_native.contains("am")) {
+//            binding.shimmerFing.visibility = View.VISIBLE
+//            object : CountDownTimer(2000, 1000) {
+//                override fun onTick(p0: Long) {}
+//                override fun onFinish() {
+//                    binding.shimmerFing.visibility = View.GONE
+//                    AdmobNativeAds.showPreFetch(
+//                        this@EnableFingerPrintAct,
+//                        AdsConstant.fingerprint_screen_native,
+//                        binding.nativeLayout
+//                    )
+//                }
+//            }.start()
+//        }
+//    }
+
     override fun onBackPressed() {
         super.onBackPressed()
-        Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
-            override fun onAdDisplayed() {
-                // No action needed
-            }
-
-            override fun onDismiss() {
-                backtoDashScreen()
-                finish()
-            }
-        })
+        backtoDashScreen()
+        finish()
     }
 }

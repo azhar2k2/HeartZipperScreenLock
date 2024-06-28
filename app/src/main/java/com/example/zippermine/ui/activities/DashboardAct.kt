@@ -1,8 +1,8 @@
 package com.example.zippermine.ui.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -14,11 +14,12 @@ import com.example.zippermine.core.HeartAppConstants
 import com.example.zippermine.core.HeartPrefConst
 import com.example.zippermine.core.SHOW_AD_ON_NEXT_SCREEN
 import com.example.zippermine.data.interfaces.FingerprintAdsDismiss
-import com.example.zippermine.data.interfaces.InterstitialCallBack
 import com.example.zippermine.databinding.ActivityDashboardBinding
 import com.example.zippermine.ui.ads.Ads
 import com.example.zippermine.ui.dialog.ExitBottomSheet
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.FirebaseApp
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.preference.PowerPreference
 
 class DashboardAct : AppCompatActivity(), FingerprintAdsDismiss {
@@ -40,6 +41,64 @@ class DashboardAct : AppCompatActivity(), FingerprintAdsDismiss {
         setContentView(binding.root)
 
         initFuns()
+
+        FirebaseApp.initializeApp(this)
+        val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+
+        // Set default values (fallback when values are not available)
+        val defaults: Map<String, Any> = mapOf(
+            "welcome_message" to "Welcome to our app!",
+            "dashboardNative" to "" // Default value for splashNative
+        )
+
+        firebaseRemoteConfig.setDefaultsAsync(defaults).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Fetch remote configs
+                firebaseRemoteConfig.fetchAndActivate().addOnCompleteListener { fetchTask ->
+                    if (fetchTask.isSuccessful) {
+                        // Remote configs fetched and activated
+                        Ads.dashboardNative = firebaseRemoteConfig.getString("dashboardNative")
+
+                        // Load and show the native or MREC ad
+                        Ads.loadAndShowNativeOrMRECAd(
+                            this,
+                            remoteKey = Ads.dashboardNative,
+                            frameLayout = findViewById<FrameLayout>(R.id.am_native_dash)
+                        )
+                    } else {
+                        // Fetch failed
+                    }
+                }
+            } else {
+                // Set defaults failed
+            }
+        }
+
+        val interstFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+
+        interstFirebaseRemoteConfig.setDefaultsAsync(defaults).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Fetch remote configs
+                interstFirebaseRemoteConfig.fetchAndActivate().addOnCompleteListener { fetchTask ->
+                        if (fetchTask.isSuccessful) {
+                            // Remote configs fetched and activated
+                            Ads.interstitialON =
+                                interstFirebaseRemoteConfig.getString("interstitialON")
+
+                            // Load and show the native or MREC ad
+                            Ads.loadAndShowInterstitial(
+                                this,
+                                remoteKey = Ads.interstitialON,
+//                                    frameLayout = findViewById<FrameLayout>(R.id.am_native_dash)
+                            )
+                        } else {
+                            // Fetch failed
+                        }
+                    }
+            } else {
+                // Set defaults failed
+            }
+        }
     }
 
     private fun initFuns() {
@@ -75,15 +134,12 @@ class DashboardAct : AppCompatActivity(), FingerprintAdsDismiss {
         }
 
         binding.passwordResetCard.setOnClickListener {
-            Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
-                override fun onAdDisplayed() {
-                    // No action needed
-                }
 
-                override fun onDismiss() {
-                    securityQuestionScreen()
-                }
-            })
+            securityQuestionScreen()
+        }
+
+        binding.changeLanguageCard.setOnClickListener {
+            changeLanguageScreen()
         }
 
         binding.navRateUs.setOnClickListener {
@@ -95,40 +151,18 @@ class DashboardAct : AppCompatActivity(), FingerprintAdsDismiss {
         }
 
         binding.fingerprintCard.setOnClickListener {
-            Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
-                override fun onAdDisplayed() {
-                    // No action needed
-                }
 
-                override fun onDismiss() {
-                    enableFingerPrintScreen()
-                }
-            })
+            enableFingerPrintScreen()
         }
 
         binding.previewIcon.setOnClickListener {
-            Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
-                override fun onAdDisplayed() {
-                    // No action needed
-                }
 
-                override fun onDismiss() {
-                    previewScreen()
-                }
-            })
+            previewScreen()
         }
 
         binding.enableZipLock.setOnClickListener {
 
-            Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
-                override fun onAdDisplayed() {
-                    // No action needed
-                }
-
-                override fun onDismiss() {
-                    enableLockScreen()
-                }
-            })
+            enableLockScreen()
 
         }
 
@@ -142,12 +176,7 @@ class DashboardAct : AppCompatActivity(), FingerprintAdsDismiss {
                     PowerPreference.getDefaultFile()
                         .setBoolean(HeartPrefConst.IsFingerPrintSet, false)
                 } else {
-                    startActivity(
-                        Intent(
-                            this@DashboardAct,
-                            SetPasswordAct::class.java
-                        )
-                    )
+                    setPAsswordScreen()
                 }
             } else {
                 showSnackBar(binding.root, "Enable Zip Lock First.")
@@ -155,15 +184,8 @@ class DashboardAct : AppCompatActivity(), FingerprintAdsDismiss {
         }
 
         binding.themesCard.setOnClickListener {
-            Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
-                override fun onAdDisplayed() {
-                    // No action needed
-                }
 
-                override fun onDismiss() {
-                    themesScreen()
-                }
-            })
+            themesScreen()
         }
 
         binding.vibrationCard.setOnClickListener {
@@ -176,51 +198,65 @@ class DashboardAct : AppCompatActivity(), FingerprintAdsDismiss {
             }
         }
     }
+
     private fun enableLockScreen() {
         startActivity(
             Intent(
-                this,
-                EnableLockAct::class.java
+                this, EnableLockAct::class.java
             ).putExtra(SHOW_AD_ON_NEXT_SCREEN, true)
         )
         finish()
     }
 
-    private fun enableFingerPrintScreen(){
+    private fun setPAsswordScreen() {
         startActivity(
             Intent(
-                this,
-                EnableFingerPrintAct::class.java
+                this, SetPasswordAct::class.java
             ).putExtra(SHOW_AD_ON_NEXT_SCREEN, true)
         )
         finish()
     }
 
-    private fun previewScreen(){
+    private fun enableFingerPrintScreen() {
         startActivity(
             Intent(
-                this,
-                PreviewAct::class.java
+                this, EnableFingerPrintAct::class.java
             ).putExtra(SHOW_AD_ON_NEXT_SCREEN, true)
         )
         finish()
     }
 
-    private fun securityQuestionScreen(){
+    private fun previewScreen() {
         startActivity(
             Intent(
-                this,
-                SecurityQuestionSet::class.java
+                this, PreviewAct::class.java
             ).putExtra(SHOW_AD_ON_NEXT_SCREEN, true)
         )
         finish()
     }
 
-    private fun themesScreen(){
+    private fun securityQuestionScreen() {
         startActivity(
             Intent(
-                this,
-                ThemesAct::class.java
+                this, SecurityQuestionSet::class.java
+            ).putExtra(SHOW_AD_ON_NEXT_SCREEN, true)
+        )
+        finish()
+    }
+
+    private fun changeLanguageScreen() {
+        startActivity(
+            Intent(
+                this, LanguageAct::class.java
+            ).putExtra(SHOW_AD_ON_NEXT_SCREEN, true)
+        )
+        finish()
+    }
+
+    private fun themesScreen() {
+        startActivity(
+            Intent(
+                this, ThemesAct::class.java
             ).putExtra(SHOW_AD_ON_NEXT_SCREEN, true)
         )
         finish()
@@ -256,8 +292,8 @@ class DashboardAct : AppCompatActivity(), FingerprintAdsDismiss {
         }
     }
 
+    @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
-        super.onBackPressed()
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             binding.drawerLayout.closeDrawers()
         } else {
@@ -279,36 +315,31 @@ class DashboardAct : AppCompatActivity(), FingerprintAdsDismiss {
         super.onResume()
 
         binding.setPasswordSwitch.isChecked = PowerPreference.getDefaultFile().getBoolean(
-            HeartPrefConst.IsPasswordSet,
-            false
+            HeartPrefConst.IsPasswordSet, false
         )
 
         binding.vibrationSwitch.isChecked = PowerPreference.getDefaultFile().getBoolean(
-            HeartPrefConst.IsVibrationSet,
-            false
+            HeartPrefConst.IsVibrationSet, false
         )
     }
 
     override fun fingerprintAdDismiss() {
         if (!fingerPrint) {
             showSnackBar(
-                binding.drawerLayout,
-                getString(R.string.fingerprint_lock_off)
+                binding.drawerLayout, getString(R.string.fingerprint_lock_off)
             )
         }
 
         if (fingerPrint) {
             showSnackBar(
-                binding.drawerLayout,
-                getString(R.string.fingerprint_lock_on)
+                binding.drawerLayout, getString(R.string.fingerprint_lock_on)
             )
             fingerPrint = false
         }
 
         if (setLockFirst) {
             showSnackBar(
-                binding.drawerLayout,
-                getString(R.string.enable_lock_error)
+                binding.drawerLayout, getString(R.string.enable_lock_error)
             )
             setLockFirst = false
         }

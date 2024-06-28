@@ -1,12 +1,22 @@
 package com.example.zippermine.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import com.example.zippermine.core.HeartPrefConst
+import com.example.zippermine.data.interfaces.InterstitialCallBack
 import com.example.zippermine.databinding.ActivitySetPasswordBinding
+import com.example.zippermine.ui.ads.AdmobBannerAds
+import com.example.zippermine.ui.ads.Ads
+import com.example.zippermine.ui.ads.admob.AdsConstant
+import com.example.zippermine.ui.ads.admob.loadNdShowINterAd
+import com.example.zippermine.ui.dialog.ALodingDialog
 import com.example.zippermine.ui.dialog.SetSecuritySetting
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.preference.PowerPreference
 import java.util.*
 import kotlin.concurrent.schedule
@@ -17,13 +27,68 @@ class SetPasswordAct : AppCompatActivity() {
     private var firstAttempt = ""
     private var isFirstAttempt = true
 
+    private lateinit var aLoadingDialog: ALodingDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySetPasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //      InterstitialAd
+        val interstFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+        // Set default values (fallback when values are not available)
+        val defaults: Map<String, Any> = mapOf(
+            "welcome_message" to "Welcome to our app!",
+            "securityQuestionNative" to "" // Default value for splashNative
+        )
+
+        interstFirebaseRemoteConfig.setDefaultsAsync(defaults)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Fetch remote configs
+                    interstFirebaseRemoteConfig.fetchAndActivate()
+                        .addOnCompleteListener { fetchTask ->
+                            if (fetchTask.isSuccessful) {
+                                // Remote configs fetched and activated
+                                Ads.interstitialON = interstFirebaseRemoteConfig.getString("interstitialON")
+
+                                // Load and show the native or MREC ad
+                                Ads.loadAndShowInterstitial(
+                                    this,
+                                    remoteKey = Ads.interstitialON,
+//                                    frameLayout = findViewById<FrameLayout>(R.id.am_native_dash)
+                                )
+                            } else {
+                                // Fetch failed
+                            }
+                        }
+                } else {
+                    // Set defaults failed
+                }
+            }
+
+        binding.backImg.setOnClickListener{
+            backtoDashScreen()
+        }
+
+//        if (AdsConstant.banner_dashboard == "am") {
+//            AdmobBannerAds.loadAndShowBanner(this, binding.bannerAd)
+//        } else if (AdsConstant.banner_dashboard == "ab") {
+//            AdmobBannerAds.loadAdmobAdaptiveBanner(this, binding.bannerAd)
+//        }
+
         setListeners()
     }
+
+    private fun backtoDashScreen(){
+        startActivity(
+            Intent(
+                this@SetPasswordAct,
+                DashboardAct::class.java
+            )
+        )
+    }
+
 
     private fun setListeners() {
 
@@ -127,6 +192,7 @@ class SetPasswordAct : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
+        backtoDashScreen()
         finish()
     }
 }

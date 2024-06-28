@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "834077980390",
-    "project_id": "heartzipperlock-89083",
-    "storage_bucket": "heartzipperlock-89083.appspot.com"
+    "project_number": "226839973078",
+    "project_id": "heartzipperscreenlock",
+    "storage_bucket": "heartzipperscreenlock.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:834077980390:android:360cdc9d59ee2d4bbe6d27",
+        "mobilesdk_app_id": "1:226839973078:android:1d118be611376200800d77",
         "android_client_info": {
           "package_name": "com.example.zippermine"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBfSYv-mge4kx4Wj_LlA8WkN6XgmVU6GgM"
+          "current_key": "AIzaSyA6yjlPbmoKM4Ptty_fNsy6o-ZWTyxYOeo"
         }
       ],
       "services": {

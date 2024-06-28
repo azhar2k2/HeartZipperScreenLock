@@ -50,4 +50,15 @@
 
     <color name="text_fingerprint">#FF87898C</color>
 
+    <color name="gray_700">#616161</color>
+    <color name="gray_300">#E0E0E0</color>
+    <color name="gray_600">#757575</color>
+    <color name="gray_400">#BDBDBD</color>
+    <color name="ads_description_color">#616161</color>
+    <color name="btnTextColor">#ffffff</color>
+
+    <color name="highlight_color">#FFEB3B</color>
+    <color name="border_color">#FFEB3B</color>
+
+
 </resources>

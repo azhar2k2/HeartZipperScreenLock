@@ -31,11 +31,18 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="Door Themes"
+            android:text="@string/door_themes"
             android:textColor="@color/black"
             android:textSize="7pt" />
 
     </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/bannerAd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/door_lock_theme_rv"

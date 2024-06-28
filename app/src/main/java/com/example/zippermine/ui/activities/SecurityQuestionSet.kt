@@ -4,9 +4,12 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.FrameLayout
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -15,12 +18,20 @@ import com.example.zippermine.core.HeartAppConstants
 import com.example.zippermine.core.HeartPrefConst
 import com.example.zippermine.data.interfaces.InterstitialCallBack
 import com.example.zippermine.databinding.ActivitySecurityQuestionBinding
+import com.example.zippermine.ui.ads.AdmobBannerAds
 import com.example.zippermine.ui.ads.Ads
+//import com.example.zippermine.ui.ads.admob.AdmobNativeAds
+import com.example.zippermine.ui.ads.admob.AdsConstant
+import com.example.zippermine.ui.ads.admob.loadNdShowINterAd
+import com.example.zippermine.ui.dialog.ALodingDialog
+import com.google.firebase.FirebaseApp
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.preference.PowerPreference
 
 class SecurityQuestionSet : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: ActivitySecurityQuestionBinding
+    private lateinit var aLoadingDialog: ALodingDialog
     lateinit var spinner: Spinner
     lateinit var question: String
     var securityQuestions = arrayOf(
@@ -42,6 +53,74 @@ class SecurityQuestionSet : AppCompatActivity(), AdapterView.OnItemSelectedListe
         super.onCreate(savedInstanceState)
         binding = ActivitySecurityQuestionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        FirebaseApp.initializeApp(this)
+        val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+
+        // Set default values (fallback when values are not available)
+        val defaults: Map<String, Any> = mapOf(
+            "welcome_message" to "Welcome to our app!",
+            "securityQuestionNative" to "" // Default value for splashNative
+        )
+
+        firebaseRemoteConfig.setDefaultsAsync(defaults)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Fetch remote configs
+                    firebaseRemoteConfig.fetchAndActivate()
+                        .addOnCompleteListener { fetchTask ->
+                            if (fetchTask.isSuccessful) {
+                                // Remote configs fetched and activated
+                                Ads.securityQuestionNative = firebaseRemoteConfig.getString("securityQuestionNative")
+
+                                // Load and show the native or MREC ad
+                                Ads.loadAndShowNativeOrMRECAd(
+                                    this,
+                                    remoteKey = Ads.securityQuestionNative,
+                                    frameLayout = findViewById<FrameLayout>(R.id.nativeLayout)
+                                )
+                            } else {
+                                // Fetch failed
+                            }
+                        }
+                } else {
+                    // Set defaults failed
+                }
+            }
+
+//      InterstitialAd
+        val interstFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+
+        interstFirebaseRemoteConfig.setDefaultsAsync(defaults)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Fetch remote configs
+                    interstFirebaseRemoteConfig.fetchAndActivate()
+                        .addOnCompleteListener { fetchTask ->
+                            if (fetchTask.isSuccessful) {
+                                // Remote configs fetched and activated
+                                Ads.interstitialON = interstFirebaseRemoteConfig.getString("interstitialON")
+
+                                // Load and show the native or MREC ad
+                                Ads.loadAndShowInterstitial(
+                                    this,
+                                    remoteKey = Ads.interstitialON,
+//                                    frameLayout = findViewById<FrameLayout>(R.id.am_native_dash)
+                                )
+                            } else {
+                                // Fetch failed
+                            }
+                        }
+                } else {
+                    // Set defaults failed
+                }
+            }
+
+//        if (AdsConstant.banner_dashboard == "am") {
+//            AdmobBannerAds.loadAndShowBanner(this, binding.bannerAd)
+//        } else if (AdsConstant.banner_dashboard == "ab") {
+//            AdmobBannerAds.loadAdmobAdaptiveBanner(this, binding.bannerAd)
+//        }
 
         spinner = findViewById(R.id.spinner)
         spinner.onItemSelectedListener = this
@@ -84,7 +163,12 @@ class SecurityQuestionSet : AppCompatActivity(), AdapterView.OnItemSelectedListe
             } else {
                 binding.answerEditTextAnswer.text.clear()
                 binding.answerEditTextAnswer.hint = "Wrong Answer"
-                binding.answerEditTextAnswer.setHintTextColor(ContextCompat.getColor(this, R.color.red))
+                binding.answerEditTextAnswer.setHintTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.red
+                    )
+                )
             }
         }
 
@@ -134,6 +218,25 @@ class SecurityQuestionSet : AppCompatActivity(), AdapterView.OnItemSelectedListe
         }
     }
 
+
+//        private fun loadNativeAds() {
+//            if (AdsConstant.security_question_native.contains("am")) {
+//                binding.shimmerFing.visibility = View.VISIBLE
+//                object : CountDownTimer(2000, 1000) {
+//                    override fun onTick(p0: Long) {}
+//                    override fun onFinish() {
+//                        binding.shimmerFing.visibility = View.GONE
+//                        AdmobNativeAds.showPreFetch(
+//                            this@SecurityQuestionSet,
+//                            AdsConstant.security_question_native,
+//                            binding.nativeLayout
+//                        )
+//                    }
+//                }.start()
+//            }
+//        }
+
+
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         question = securityQuestions[position]
     }
@@ -151,15 +254,7 @@ class SecurityQuestionSet : AppCompatActivity(), AdapterView.OnItemSelectedListe
 
     override fun onBackPressed() {
         super.onBackPressed()
-        Ads.showInterstitial(this, Ads.interstitialON, object : InterstitialCallBack {
-            override fun onAdDisplayed() {
-                // No action needed
-            }
-
-            override fun onDismiss() {
-                backtoDashScreen()
-                finish()
-            }
-        })
+        backtoDashScreen()
+        finish()
     }
 }
